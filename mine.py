@@ -16,6 +16,33 @@ bot = telebot.TeleBot(token)
 
 alokt = 0
 
+sudo_id = "6024124201" #ايديك # id
+
+ch = '@biduth' #يوزر القناة
+#user channel
+
+@bot.message_handler(commands=['start'])
+def start(message):
+ msg = '''🚸| عذرا عزيزي
+🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
+
+- مــعرف القـناة : {ch} 
+
+‼️| اشترك ثم ارسل /start'''
+ idd = message.from_user.id
+ url = f"https://api.telegram.org/bot{token}/getchatmember?chat_id={ch}&user_id={idd}"
+ req = requests.get(url)
+ if idd == sudo_id or 'member' in req.text or 'creator' in req.text or 'administartor' in req.text:
+  bot.send_message(message.chat.id, "Hi")
+ 
+ else:
+  bot.send_message(message.chat.id, """*🚸| عذرا عزيزي
+🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
+
+- مــعرف القـناة : {} 
+
+‼️| اشترك ثم ارسل /start*""".format(ch),parse_mode="markdown")
+
 @bot.message_handler(commands=['start'])
 def start(message):
     name = message.from_user.first_name
