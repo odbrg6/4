@@ -92,7 +92,7 @@ def num(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == 'click')
 def all(call):
-	bot.send_message(call.message.chat.id,'''<  مبرمج البوت : @DO_I0
-قناة مبرمج البوت: @b_idu''')
+	bot.send_message(call.message.chat.id,'''<  مبرمج البوت : @n_p_ii
+قناة مبرمج البوت: @PAYTHONBOTSFIELS''')
 
 bot.infinity_polling()
