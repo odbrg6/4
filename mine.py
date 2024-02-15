@@ -33,18 +33,6 @@ def start(message):
  url = f"https://api.telegram.org/bot{token}/getchatmember?chat_id={ch}&user_id={idd}"
  req = requests.get(url)
  if idd == sudo_id or 'member' in req.text or 'creator' in req.text or 'administartor' in req.text:
-  bot.send_message(message.chat.id, "Hi")
- 
- else:
-  bot.send_message(message.chat.id, """*🚸| عذرا عزيزي
-🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
-
-- مــعرف القـناة : {} 
-
-‼️| اشترك ثم ارسل /start*""".format(ch),parse_mode="markdown")
-
-@bot.message_handler(commands=['start'])
-def start(message):
     name = message.from_user.first_name
     bot.reply_to(message, f'''اهلا بك عزيزي {name} في بوت 👾 سبام مكالمات عن طريق رقم الهاتف 
 
@@ -53,6 +41,14 @@ def start(message):
 
 مثال:
 +96450100756''',reply_markup=Mak().add(Btn('ميو',callback_data='click')))
+ 
+ else:
+  bot.send_message(message.chat.id, """*🚸| عذرا عزيزي
+🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
+
+- مــعرف القـناة : {} 
+
+‼️| اشترك ثم ارسل /start*""".format(ch),parse_mode="markdown")
 
 def call(number):
     global alokt
