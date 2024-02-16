@@ -1,5 +1,4 @@
 from telegram.ext import Updater, MessageHandler, filters
-from telegram import ChatAction
 
 # تعريف دالة للرد على حذف الرسائل
 def deleted_message(update, context):
