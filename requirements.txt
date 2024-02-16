@@ -1,3 +1,2 @@
 requests
 telegram
-telegram.ext
