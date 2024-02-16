@@ -16,7 +16,7 @@ def main():
     token = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
 
     # إنشاء مستعرض
-    updater = Updater(token, use_context=True)
+    updater = Updater(token)
 
     # حدد المنظف للحصول على الرسائل المحذوفة
     dp = updater.dispatcher
