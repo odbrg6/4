@@ -1,30 +1,44 @@
 from pyrogram import Client
+import asyncio
 
+# تعيين متغيرات البيئة
 api_id = '25789625'
 api_hash = '3a161749a26291b8315e7769251dea3a'
 phone_number = '+37122233543'
-
-# Replace 'YOUR_CHANNEL_USERNAME' with the actual username of the channel you want to fetch messages from
 channel_username = 'sdsfsasd'
 
-with Client("my_account", api_id, api_hash) as app:
-    # Get the recent messages in the channel
-    messages = app.get_chat_history(channel_username, limit=1)
+# إنشاء وتهيئة العميل
+app = Client("my_account", api_id, api_hash)
 
-    # Check if there is any message
-    if messages:
-        # Get the last message
-        last_message = messages[0]
+# دالة لالتقاط لقطة شاشة لآخر الأحداث في القناة
+async def capture_last_event_screenshot():
+    # الاتصال بالحساب
+    await app.start()
 
-        # Check if the last message has media
-        if last_message.media:
-            # Download the media file
-            media = app.download_media(last_message)
+    # الحصول على المحادثة
+    chat = await app.get_chat(channel_username)
 
-            # Take a screenshot of the media file
-            screenshot = app.screenshot(media)
+    # الحصول على آخر رسالة في المحادثة
+    last_message = await app.get_history(chat.id, limit=1)
 
-            # Save the screenshot
-            screenshot.save("last_event_screenshot.jpg")
+    # التأكد من وجود رسالة
+    if last_message:
+        # الحصول على الوسائط المرتبطة بالرسالة
+        media = last_message[0].media
 
-            print("Screenshot saved successfully.")
+        # التأكد من وجود وسائط
+        if media:
+            # التقاط لقطة شاشة للوسائط
+            screenshot_bytes = await app.download_media(media)
+
+            # حفظ اللقطة الشاشة
+            with open("last_event_screenshot.jpg", "wb") as file:
+                file.write(screenshot_bytes)
+
+            print("تم حفظ اللقطة الشاشة بنجاح.")
+
+    # إيقاف العميل
+    await app.stop()
+
+# تشغيل الدالة
+asyncio.run(capture_last_event_screenshot())
