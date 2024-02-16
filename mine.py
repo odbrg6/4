@@ -1,4 +1,4 @@
-from telegram.ext import Updater, MessageHandler, Filters
+from telegram.ext import Updater, MessageHandler, filters
 from telegram import ChatAction
 
 # تعريف دالة للرد على حذف الرسائل
@@ -21,7 +21,7 @@ def main():
 
     # حدد المنظف للحصول على الرسائل المحذوفة
     dp = updater.dispatcher
-    dp.add_handler(MessageHandler(Filters.all, deleted_message))
+    dp.add_handler(MessageHandler(filters.all, deleted_message))
 
     # بدء البوت
     updater.start_polling()
