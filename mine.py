@@ -8,7 +8,7 @@ def deleted_message(update, context):
 # تعريف وظيفة البدء للتفاعل مع الرسائل
 def main():
     # تعيين التوكن الخاص بالبوت
-    updater = Updater("YOUR_BOT_TOKEN", use_context=True)
+    updater = Updater("6724095206:AAHcTqyenhPr3CJUlsRQblMYNHAYiJxZnmc", use_context=True)
 
     # اضافة المناسبة لمعالجة الرسائل المحذوفة
     updater.dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.update.edited_message), deleted_message))
