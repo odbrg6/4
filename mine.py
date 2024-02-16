@@ -11,7 +11,7 @@ def main():
     updater = Updater("6724095206:AAHcTqyenhPr3CJUlsRQblMYNHAYiJxZnmc", use_context=True)
 
     # اضافة المناسبة لمعالجة الرسائل المحذوفة
-    updater.dispatcher.add_handler(MessageHandler(Filters.update.deleted_message, deleted_message))
+    updater.dispatcher.add_handler(MessageHandler(Filters.update.delete, deleted_message))
 
     # بدء البوت
     updater.start_polling()
