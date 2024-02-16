@@ -1,30 +1,17 @@
-from telegram.ext import Updater, MessageHandler, filters
+import telebot
 
-# تعريف دالة للرد على حذف الرسائل
-def deleted_message(update, context):
-    message = update.message
-    if message:
-        # إرسال رسالة تسأل العضو عن سبب حذف الرسالة
-        context.bot.send_message(
-            chat_id=message.chat_id,
-            text=f"عذراً! لماذا قمت بحذف الرسالة؟",
-            reply_to_message_id=message.message_id
-        )
+# Replace 'YOUR_TELEGRAM_BOT_TOKEN' with your actual bot token
+bot = telebot.TeleBot('6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4')
 
-def main():
-    # تعريف التوكن الخاص بالبوت
-    token = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
+# Replace 'YOUR_DEVELOPER_CHAT_ID' with the chat ID of the developer
+developer_chat_id = '-1001844054913'
 
-    # إنشاء مستعرض
-    updater = Updater(token)
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    # Check if the message is deleted
+    if message.content_type == 'text':
+        # Send a notification to the developer
+        bot.send_message(developer_chat_id, f"Admin {message.from_user.username} deleted a message from the channel.")
 
-    # حدد المنظف للحصول على الرسائل المحذوفة
-    dp = updater.dispatcher
-    dp.add_handler(MessageHandler(filters.all, deleted_message))
-
-    # بدء البوت
-    updater.start_polling()
-    updater.idle()
-
-if __name__ == '__main__':
-    main()
+# Start the bot
+bot.polling()
