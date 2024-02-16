@@ -1,5 +1,3 @@
-telebot
 requests
-Filters
 MessageHandler
 Updater
