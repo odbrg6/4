@@ -1,22 +1,15 @@
-from telethon.sync import TelegramClient
-from telethon.tl.functions.photos import GetUserPhotosRequest
-import asyncio
+from pyrogram import Client
 
 api_id = '25789625'
 api_hash = '3a161749a26291b8315e7769251dea3a'
-phone_number = '37122233543'
+phone_number = '+37122233543'
 
-# Replace 'sdsfsasd' with the actual username of the channel you want to capture the screenshot from
-channel_username = ''
+# Replace 'YOUR_CHANNEL_USERNAME' with the actual username of the channel you want to fetch messages from
+channel_username = 'sdsfsasd'
 
-client = TelegramClient(phone_number, api_id, api_hash)
-
-async def capture_last_event_screenshot():
-    # Get the channel entity
-    channel = await client.get_entity(channel_username)
-
+with Client("my_account", api_id, api_hash) as app:
     # Get the recent messages in the channel
-    messages = await client.get_messages(channel, limit=1)
+    messages = app.get_chat_history(channel_username, limit=1)
 
     # Check if there is any message
     if messages:
@@ -26,16 +19,12 @@ async def capture_last_event_screenshot():
         # Check if the last message has media
         if last_message.media:
             # Download the media file
-            media = await last_message.download_media()
+            media = app.download_media(last_message)
 
             # Take a screenshot of the media file
-            screenshot = await client.takeout_file(media)
+            screenshot = app.screenshot(media)
 
             # Save the screenshot
-            with open('last_event_screenshot.jpg', 'wb') as f:
-                f.write(screenshot)
+            screenshot.save("last_event_screenshot.jpg")
 
             print("Screenshot saved successfully.")
-
-with client:
-    client.loop.run_until_complete(capture_last_event_screenshot())
