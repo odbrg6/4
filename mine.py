@@ -46,5 +46,4 @@ async def capture_last_event_screenshot():
         await app.stop()
 
 # تشغيل الدالة
-await capture_last_event_screenshot()
-
+asyncio.run(capture_last_event_screenshot())
