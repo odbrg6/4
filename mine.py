@@ -1,26 +1,31 @@
 from telegram.ext import Updater, MessageHandler, Filters
+from telegram import ChatAction
 
-# تعريف وظيفة لإرسال رسالة عند حذف الرسالة
+# تعريف دالة للرد على حذف الرسائل
 def deleted_message(update, context):
-    # التحقق من حدوث حذف الرسالة
-    if update.message is None:
-        deleted_message_text = "تم حذف الرسالة التالية:\n{}".format(update.effective_message.text)
-        context.bot.send_message(chat_id=update.effective_chat.id, text=deleted_message_text)
+    message = update.message
+    if message:
+        # إرسال رسالة تسأل العضو عن سبب حذف الرسالة
+        context.bot.send_message(
+            chat_id=message.chat_id,
+            text=f"عذراً! لماذا قمت بحذف الرسالة؟",
+            reply_to_message_id=message.message_id
+        )
 
-# تعريف وظيفة البدء للتفاعل مع الرسائل
 def main():
-    # تعيين التوكن الخاص بالبوت
-    updater = Updater("6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4", use_context=True)
+    # تعريف التوكن الخاص بالبوت
+    token = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
 
-    # اضافة المناسبة لمعالجة الرسائل المحذوفة
-    updater.dispatcher.add_handler(MessageHandler(Filters.all, deleted_message))
+    # إنشاء مستعرض
+    updater = Updater(token, use_context=True)
+
+    # حدد المنظف للحصول على الرسائل المحذوفة
+    dp = updater.dispatcher
+    dp.add_handler(MessageHandler(Filters.all, deleted_message))
 
     # بدء البوت
     updater.start_polling()
-
-    # البقاء في الحلقة الرئيسية
     updater.idle()
 
-# تنفيذ الدالة الرئيسية
 if __name__ == '__main__':
     main()
