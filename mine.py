@@ -4,7 +4,7 @@ import asyncio
 
 api_id = '25789625'
 api_hash = '3a161749a26291b8315e7769251dea3a'
-phone_number = '+37122233543'
+phone_number = '37122233543'
 
 # Replace 'sdsfsasd' with the actual username of the channel you want to capture the screenshot from
 channel_username = ''
