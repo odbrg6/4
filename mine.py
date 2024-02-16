@@ -1,4 +1,5 @@
-from telegram.ext import Updater, MessageHandler, Filters
+from telegram.ext import Updater, MessageHandler
+from telegram.ext.filters import Filters
 
 # تعريف وظيفة لإرسال رسالة عند حذف الرسالة
 def deleted_message(update, context):
