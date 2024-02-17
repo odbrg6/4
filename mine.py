@@ -1,5 +1,5 @@
 from telegram import Update, Bot
-from telegram.ext import Updater, MessageHandler, Filters, CallbackContext
+from telegram.ext import Updater, MessageHandler, filters, CallbackContext
 
 # تعيين توكن البوت الخاص بك
 TOKEN = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
@@ -19,10 +19,10 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     # يقوم البوت بالاستجابة عند بدء المحادثة
-    dispatcher.add_handler(MessageHandler(Filters.command & Filters.private, start))
+    dispatcher.add_handler(MessageHandler(filters.command & filters.private, start))
     
     # يقوم البوت بمراقبة حذف الرسائل
-    dispatcher.add_handler(MessageHandler(Filters.update.message.delete, delete_message))
+    dispatcher.add_handler(MessageHandler(filters.update.message.delete, delete_message))
 
     updater.start_polling()
     updater.idle()
