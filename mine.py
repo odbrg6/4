@@ -1,27 +1,30 @@
-from telethon.sync import TelegramClient, events
+from telegram import Update, Bot
+from telegram.ext import Updater, MessageHandler, Filters, CallbackContext
 
-# تعريف المتغيرات اللازمة للوصول إلى الحساب
-api_id = '25789625'
-api_hash = '3a161749a26291b8315e7769251dea3a'
-phone_number = '+37122233543'
+# تعيين توكن البوت الخاص بك
+TOKEN = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
 
-# تعريف دالة لإرسال الإخطارات
-def send_notification(message):
-    print("تم حذف رسالة: ", message)
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('مرحبًا! البوت جاهز لمراقبة الرسائل.')
 
-# إنشاء وتهيئة العميل
-client = TelegramClient('session_name', api_id, api_hash)
-client.start(phone_number)
+def delete_message(update: Update, context: CallbackContext) -> None:
+    deleted_message = update.message
+    chat_id = update.effective_chat.id
+    bot = context.bot
+    bot.send_message(chat_id=chat_id, text=f"تم حذف رسالة نصية: {deleted_message.text}")
 
-# تحديد المحادثة أو القناة
-channel_username = 'sdsfsasd'
+def main() -> None:
+    updater = Updater(TOKEN)
+    dispatcher = updater.dispatcher
 
-# التفاعل مع حذف الرسائل
-@client.on(events.MessageDeleted(chats=channel_username))
-async def handle_deleted_messages(event):
-    for msg_id in event.deleted_ids:
-        send_notification(f"تم حذف رسالة بالرقم: {msg_id}")
+    # يقوم البوت بالاستجابة عند بدء المحادثة
+    dispatcher.add_handler(MessageHandler(Filters.command & Filters.private, start))
+    
+    # يقوم البوت بمراقبة حذف الرسائل
+    dispatcher.add_handler(MessageHandler(Filters.update.message.delete, delete_message))
 
-# بدء تشغيل العميل
-client.run_until_disconnected()
+    updater.start_polling()
+    updater.idle()
 
+if __name__ == '__main__':
+    main()
