@@ -1,5 +1,5 @@
 from telegram import Update, Bot
-from telegram.ext import Updater, MessageHandler, filters, CallbackContext
+from telegram.ext import Updater, MessageHandler, Filters, CallbackContext
 
 # تعيين توكن البوت الخاص بك
 TOKEN = '6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4'
@@ -14,14 +14,15 @@ def delete_message(update: Update, context: CallbackContext) -> None:
     bot.send_message(chat_id=chat_id, text=f"تم حذف رسالة نصية: {deleted_message.text}")
 
 def main() -> None:
-    updater = Updater("6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4")
+    bot = Bot(token=TOKEN)
+    updater = Updater(bot=bot)
     dispatcher = updater.dispatcher
 
     # يقوم البوت بالاستجابة عند بدء المحادثة
-    dispatcher.add_handler(MessageHandler(filters.command & Filters.private, start))
+    dispatcher.add_handler(MessageHandler(Filters.command & Filters.private, start))
     
     # يقوم البوت بمراقبة حذف الرسائل
-    dispatcher.add_handler(MessageHandler(filters.update.message.delete, delete_message))
+    dispatcher.add_handler(MessageHandler(Filters.update.message.delete, delete_message))
 
     updater.start_polling()
     updater.idle()
