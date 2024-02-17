@@ -10,12 +10,11 @@ def start(update: Update, context: CallbackContext) -> None:
 def delete_message(update: Update, context: CallbackContext) -> None:
     deleted_message = update.message
     chat_id = update.effective_chat.id
-    bot = context.bot
+    bot = context.bot  # تأكد من أنك تستخدم context.bot بشكل صحيح هنا
     bot.send_message(chat_id=chat_id, text=f"تم حذف رسالة نصية: {deleted_message.text}")
 
 def main() -> None:
-    bot = Bot(token=TOKEN)
-    updater = Updater(bot=bot)
+    updater = Updater(TOKEN)
     dispatcher = updater.dispatcher
 
     # يقوم البوت بالاستجابة عند بدء المحادثة
