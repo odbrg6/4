@@ -2,3 +2,4 @@ telebot
 pytesseract
 opencv-python
 pyTelegramBotAPI
+opencv-python-headless==4.2.0.32
