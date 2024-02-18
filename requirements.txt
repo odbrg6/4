@@ -1,3 +1,2 @@
-cv2
 telebot 
 pytesseract
