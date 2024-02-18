@@ -4,8 +4,8 @@ import random
 import telebot
 from datetime import date ,timedelta ,time
 import time 
-ssss = '6024124201'
-bot = telebot.TeleBot("6724095206:AAGeobKqBMfSC_o72mbowIFm1OLlBC-_nO4")
+ssss = '5024278507'
+bot = telebot.TeleBot("5496942470:AAFwqnSzxHMkHhr8uge395ghpiXwAyIHzj0")
 p3 = types.InlineKeyboardMarkup()
 p5 = types.InlineKeyboardButton(text = "[!] 𝗚𝗛𝗢𝗦𝗧 ^ 𝗦𝗢𝗨𝗥𝗖𝗘 🇰🇼",url="t.me/pjpppppp")
 A1 = types.InlineKeyboardButton(text = "اوامر الحماية .",callback_data="A1")
@@ -284,9 +284,9 @@ def start(message):
 𖡋 𝐓𝐘𝐏𝐄 ⌯  {} 
 
 𖡋 𝐁𝐈𝐎 ⌯ {} *""".format(s333,c,k,d,t,bio),parse_mode="markdown",reply_to_message_id=message.message_id)
-	m = message.text
-	if m == "ر":
-	 e = message.chat.id
+m = message.text
+if m == "ر":
+	e = message.chat.id
 u = bot.get_chat(e).photo.big_file.id
 file_info = bot.get_file(u)
 downloaded_file = bot
