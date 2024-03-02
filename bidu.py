@@ -31,4 +31,4 @@ async def main():
     await send_and_delete('ارسال 2', 40)
 
 # تشغيل البرنامج الرئيسي
-asyncio.run(main())
+client.start()
