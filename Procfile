@@ -1,1 +1,1 @@
-worker: python3 mine.py
+worker: python3 bidu.py
