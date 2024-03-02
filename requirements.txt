@@ -1,5 +1,1 @@
-telebot 
-pytesseract
-opencv-python
-pyTelegramBotAPI
-opencv-python-headless
+telethon
