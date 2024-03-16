@@ -1,7 +1,6 @@
 import telebot , requests , json ; from telebot import types
 token = "7039462535:AAHNXJQu3BPYLFBk3UHj1QJszpfvNXHHRQc"#Token
 bot = telebot.TeleBot(token)
-@bot.message_handler(commands=["star
 @bot.message_handler(commands=['start'])
 def start(message):
 	start = types.InlineKeyboardButton(text='- تنزيل فيديو',callback_data='start')
